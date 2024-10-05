@@ -1,0 +1,163 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+:root {
+--font: 'Inter';
+--cinza-secundario: #121212;
+--branco-principal: #FFFFFF;
+}
+
+
+.body{
+    background-color: #EEEEEE;
+    height: 100vh;
+    width: 100vh;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    padding: 0px;
+}
+
+.sidebar__navigation {
+    background-color: #E3E3E3;
+    padding: 20px 0 0 0px;
+    width: 115%;
+    height: 100vh;
+}
+
+.sidebar nav ul {
+    list-style-type: none;
+    margin-top: 30px;
+    padding: 0px 0;
+    width: 90%;
+    padding: 10px;
+
+}
+
+.sidebar nav ul li span img {
+    float: left;
+}
+
+.sidebar nav ul li {
+    padding: 15px 30px;
+    font-family: var(--font);
+    text-decoration: none;
+    color: #8d8c8c;
+    background-color: #cccccc;
+    margin-top: 10px;
+    border-radius: 15px;
+}
+
+.sidebar nav ul li:first-child{
+    background-color: #b5a0f050;
+    text-align: center;
+    margin: 0;
+    font-size: 15px;
+}
+
+.sidebar nav ul li a:first-child{
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.sidebar nav ul li a {
+    color: #8d8c8c;
+    font-size: 14px;
+    text-decoration: none;
+    font-family: var(--font);
+    font-weight: 550;
+    text-align: center;
+    margin-left: 10px;
+}
+
+h1 {
+    font-family: var(--font);
+    color:#757575;
+    font-weight: 500;
+}
+
+section {
+    max-width: 250%;
+    height: 100vh;
+    margin-left: 320px;
+}
+
+table {
+    width: 100%; /* Começa com 100% e será ajustado pelo JavaScript */
+    max-width: 150%;
+    margin-bottom: 2rem;
+    margin-top: 0;
+    background-color: #e7e7e7;
+    border-radius: 20px;
+    > thead,
+    > tbody,
+    > tfoot {
+      > tr {
+        > th,
+        > td {
+          text-align: left;
+          padding: 1.2rem;
+          vertical-align: top;
+          border-top: 0;
+          font-family: var(--font);
+          position: relative; /* Para posicionar o divisor */
+          
+        }
+      }
+    }
+    > thead > tr > th {
+        font-weight: 400;
+        color: #757575;
+        vertical-align: bottom;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        font-family: var(--font);
+        font-weight: 500;
+        font-size: 15px;
+        cursor: col-resize; /* Muda o cursor para indicar que pode redimensionar */
+      }
+
+}
+
+th {
+    position: relative; /* Necessário para o posicionamento do divisor */
+    min-width: 50px; /* Largura mínima */
+}
+
+th .resizer {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 5px; /* Largura do divisor */
+    cursor: col-resize; /* Muda o cursor para indicar que pode redimensionar */
+    z-index: 1; /* Garante que o divisor esteja acima das outras camadas */
+}
+
+select {
+    background-color: #b5a0f050;
+    border: none;
+    padding: 5px;
+    border-radius: 10px;
+    font-family: var(--font);
+    appearance: none;
+}
+
+.table-container {
+    max-width: 300%; /* Ajusta a largura máxima */
+    overflow-x: auto; /* Adiciona uma barra de rolagem horizontal */
+}
+
+button {
+    border: none;
+    align-content: center;
+    padding: 10px 30px;
+    border-radius: 15px;
+    background-color: #9c9c9c;
+}
+

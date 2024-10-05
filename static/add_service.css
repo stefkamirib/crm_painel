@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+/*ADD SERVICE*/
+
+:root {
+    --font: 'Inter';
+    --cinza-secundario: #121212;
+    --branco-principal: #FFFFFF;
+}
+
+body {
+    background-color: #EEEEEE;
+    font-family: var(--font);
+    overflow-x: hidden;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    padding: 0px;
+}
+
+.sidebar__navigation {
+    background-color: #E3E3E3;
+    padding: 20px 0 0 0px;
+    width: 115%;
+    height: 100vh;
+}
+
+.sidebar nav ul {
+    list-style-type: none;
+    margin-top: 30px;
+    padding: 0px 0;
+    width: 90%;
+    padding: 10px;
+
+}
+
+.sidebar nav ul li span img {
+    float: left;
+}
+
+.sidebar nav ul li {
+    padding: 15px 30px;
+    font-family: var(--font);
+    text-decoration: none;
+    color: #8d8c8c;
+    background-color: #cccccc;
+    margin-top: 10px;
+    border-radius: 15px;
+}
+
+.sidebar nav ul li:first-child{
+    background-color: #b5a0f050;
+    text-align: center;
+    margin: 0;
+    font-size: 15px;
+}
+
+.sidebar nav ul li a:first-child{
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.sidebar nav ul li a {
+    color: #8d8c8c;
+    font-size: 14px;
+    text-decoration: none;
+    font-family: var(--font);
+    font-weight: 550;
+    text-align: center;
+    margin-left: 10px;
+}
+
+section {
+    position: absolute;
+    margin-left: 300px;
+    top: 100px;
+    width: 90%;
+}
+
+h1 {
+    color:#757575;
+    font-weight: 500;
+}
+
+.form-control {
+    padding: 10px;
+    border: none;
+    border-radius: 15px;
+    margin-bottom: 20px;
+
+}
+
+.btn_btn_primary {
+    background-color: #b5a0f050;
+    padding: 15px 25px;
+    border-radius: 15px;
+    border: none;
+}

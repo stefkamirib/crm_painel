@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Serviço</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='add_service.css') }}">
+</head>
+<body>
+    <div class="sidebar">
+        <nav class="sidebar__navigation">
+            <ul>
+                <li class="homepage">
+                    <a href="{{ url_for('painel') }}">
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li class="add_client">
+                    <span><img src="{{ url_for('static', filename='icons/icon_hands.png') }}" alt="Descrição da Imagem" width="22px"></span>
+                    <a href="{{ url_for('add_client') }}">
+                        Adicionar Cliente
+                    </a>
+                </li>
+
+                <li class="add_service">
+                    <span><img src="{{ url_for('static', filename='icons/icon_people.png') }}" alt="Descrição da Imagem" width="22px"></span>
+                    <a href="{{ url_for('add_service') }}">
+                        Adicionar Serviço
+                    </a>
+                </li>
+
+                <li class="create_ticket">
+                    <span><img src="{{ url_for('static', filename='icons/icon_business.png') }}" alt="Descrição da Imagem" width="23px"></span>
+                    <a href="{{ url_for('create_ticket') }}">
+                        Criar Ticket
+                    </a>
+                </li>
+                <li class="view_tickets">
+                    <span><img src="{{ url_for('static', filename='icons/icon_business.png') }}" alt="Descrição da Imagem" width="23px"></span>
+                    <a href="{{ url_for('view_tickets') }}">
+                        Gestão de Tickets
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <section>
+        <h1>Adicionar Serviço</h1>
+        <main>
+            <form method="POST">
+                {{ form.hidden_tag() }}
+
+                <div class="form-group">
+                    <label for="service_type">Tipo de Serviço:</label>
+                    {{ form.service_type(class_="form-control", size=32) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.submit(class_="btn_btn_primary") }}
+                </div>
+            </form>
+        </main>
+    </section>
+</body>
+</html>

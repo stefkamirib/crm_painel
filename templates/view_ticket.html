@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='view_ticket.css') }}">
+    <title>Visualizar Tickets</title>
+</head>
+<body>
+    <div class="sidebar">
+        <nav class="sidebar__navigation">
+            <ul>
+                <li class="homepage">
+                    <a href="{{ url_for('painel') }}">
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li class="add_client">
+                    <span><img src="{{ url_for('static', filename='icons/icon_hands.png') }}" alt="Descrição da Imagem" width="22px"></span>
+                    <a href="{{ url_for('add_client') }}">
+                        Adicionar Cliente
+                    </a>
+                </li>
+                <li class="add_service">
+                    <span><img src="{{ url_for('static', filename='icons/icon_people.png') }}" alt="Descrição da Imagem" width="22px"></span>
+                    <a href="{{ url_for('add_service') }}">
+                        Adicionar Serviço
+                    </a>
+                </li>
+                <li class="create_ticket">
+                    <span><img src="{{ url_for('static', filename='icons/icon_business.png') }}" alt="Descrição da Imagem" width="23px"></span>
+                    <a href="{{ url_for('create_ticket') }}">
+                        Criar Ticket
+                    </a>
+                </li>
+                <li class="view_tickets">
+                    <span><img src="{{ url_for('static', filename='icons/icon_business.png') }}" alt="Descrição da Imagem" width="23px"></span>
+                    <a href="{{ url_for('view_tickets') }}">
+                        Gestão de Tickets
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <section>
+        <h1>Tickets Criados</h1>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID do Ticket<div class="resizer"></div></th>
+                        <th>Nome do Cliente<div class="resizer"></div></th>
+                        <th>Email do Cliente<div class="resizer"></div></th>
+                        <th>Serviço<div class="resizer"></div></th>
+                        <th>Data de Início<div class="resizer"></div></th>
+                        <th>Valor da Negociação<div class="resizer"></div></th>
+                        <th>Fase Atual<div class="resizer"></div></th>
+                        <th>Status Geral<div class="resizer"></div></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ticket in tickets %}
+                        <tr>
+                            <td>{{ ticket.id_ticket }}</td>
+                            <td>{{ ticket.client_name }}</td>
+                            <td>{{ ticket.client_email }}</td>
+                            <td>{{ ticket.service_id }}</td>
+                            <td>{{ ticket.start_date }}</td>
+                            <td>{{ ticket.negotiation_value }}</td>
+                            <td>{{ ticket.status}}</td>
+                            <!-- Atualizar as fases com base no serviço -->
+                            <td>
+                                <form method="POST" action="{{ url_for('update_ticket', ticket_id=ticket.id_ticket) }}">
+                                    <select name="current_phase" id="current_phase_{{ ticket.id_ticket }}" class="form-control">
+                                        <!-- Options will be filled via JavaScript -->
+                                    </select>
+                            </td>
+                            <td>
+                                <select name="status" class="form-control">
+                                    <option value="A iniciar" {% if ticket.status == 'A iniciar' %}selected{% endif %}>A iniciar</option>
+                                    <option value="Em andamento" {% if ticket.status == 'Em andamento' %}selected{% endif %}>Em andamento</option>
+                                    <option value="Concluído" {% if ticket.status == 'Concluído' %}selected{% endif %}>Concluído</option>
+                                </select>
+                            </td>
+                            <td>
+                                <button type="submit">Atualizar</button>
+                            </td>
+                        </form>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <script>
+        // Mapear fases de acordo com o ID do serviço
+        const phasesMap = {
+            1: ['Recepção de documento', 'Abertura do inventário', 'Declaração no SEFAZ', 'Pagamento do ITCMD', 'Revisão da minuta', 'Emissão das certidões', 'Assinatura da escritura'],
+            2: ['Recepção de documento', 'Abertura do inventário', 'Levantamento bens e dívidas', 'Pagamento do ITCMD', 'Partilha Judicial', 'Expedição de formal de partilha'],
+            3: ['Recepção da documentação', 'Análise Patrimonial e Familiar', 'Definição de Objetos', 'Estruturação do Plano Sucessório e Patrimonial', 'Implementação do Plano', 'Conclusão (Revisão Periódica)']
+        };
+
+        // Preencher as fases de acordo com o serviço selecionado
+        document.addEventListener("DOMContentLoaded", function() {
+            {% for ticket in tickets %}
+                updatePhases({{ ticket.service_id }}, {{ ticket.id_ticket }}, "{{ ticket.current_phase }}");
+            {% endfor %}
+        });
+
+        function updatePhases(serviceId, ticketId, selectedPhase) {
+            const phases = phasesMap[serviceId] || [];
+            const phaseSelect = document.getElementById('current_phase_' + ticketId);
+            
+            // Limpa as opções anteriores
+            phaseSelect.innerHTML = '';
+
+            // Adiciona as novas opções com base no serviço
+            phases.forEach((phase) => {
+                const option = document.createElement('option');
+                option.value = phase;
+                option.text = phase;
+
+                // Se a fase atual for a fase selecionada, marcá-la como selecionada
+                if (phase === selectedPhase) {
+                    option.selected = true;
+                }
+
+                phaseSelect.appendChild(option);
+            });
+
+            // Atualiza o valor do campo hidden com a fase selecionada
+            phaseSelect.addEventListener('change', function() {
+                document.getElementById('current_phase' + ticketId).value = phaseSelect.value;
+            });
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

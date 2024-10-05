@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Clientes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='add_client.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='create_ticket.css') }}">
+</head>
+<body class="painel_body">
+
+    <div class="sidebar">
+        <nav class="sidebar__navigation">
+                <ul>
+                    <li class="homepage">
+                        <a href="{{ url_for('painel') }}">
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li class="add_client">
+                        <span><img src="{{ url_for('static', filename='icons/icon_hands.png') }}" alt="Descrição da Imagem" width="22px"></span>
+                        <a href="{{ url_for('add_client') }}">
+                            Adicionar Cliente
+                        </a>
+                    </li>
+
+                    <li class="add_service">
+                        <span><img src="{{ url_for('static', filename='icons/icon_people.png') }}" alt="Descrição da Imagem" width="22px"></span>
+                        <a href="{{ url_for('add_service') }}">
+                            Adicionar Serviço
+                        </a>
+                    </li>
+
+                    <li class="create_ticket">
+                        <span><img src="{{ url_for('static', filename='icons/icon_business.png') }}" alt="Descrição da Imagem" width="23px"></span>
+                        <a href="{{ url_for('create_ticket') }}">
+                            Criar Ticket
+                        </a>
+                    </li>
+
+                    <li class="view_tickets">
+                        <span><img src="{{ url_for('static', filename='icons/icon_business.png') }}" alt="Descrição da Imagem" width="23px"></span>
+                        <a href="{{ url_for('view_tickets') }}">
+                            Gestão de Tickets
+                        </a>
+                    </li>
+                </ul>
+        </nav>
+    </div>
+    <section>
+        <h1>Dashboard</h1>
+          
+        <h1>Painel de Clientes</h1>
+        <main>
+            <div class="table-container">
+                <form method="POST" action="{{ url_for('update_client_type') }}">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID do Cliente</th>
+                                <th>Nome</th>
+                                <th>Email</th>
+                                <th>Telefone</th>
+                                <th>Tipo de cliente</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for client in clients %}
+                            <tr>
+                                <td>{{ client.id_client }}</td>
+                                <td>{{ client.client_name }}</td>
+                                <td>{{ client.client_email }}</td>
+                                <td>{{ client.client_phone }}</td>
+                                <td>
+                                    <select name="client_type_{{ client.id_client }}">
+                                        <option value="Lead" {% if client.client_type == "Lead" %}selected{% endif %}>Lead</option>
+                                        <option value="Lead Qualificado" {% if client.client_type == "Lead Qualificado" %}selected{% endif %}>Lead Qualificado</option>
+                                        <option value="Cliente" {% if client.client_type == "Cliente" %}selected{% endif %}>Cliente</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <button type="submit">Atualizar</button>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="6">Nenhum cliente encontrado.</td>
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                    
+                </form>
+            </div>
+        </main>
+    </section>
+    
+</body>
+</html>

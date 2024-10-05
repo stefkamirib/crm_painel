@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Board do Cliente</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Painel de {{ client.name }}</h1>
+    </header>
+    <main>
+        <h2>Serviços</h2>
+        <ul>
+            {% for service in services %}
+            <li>{{ service.service_type }} - {{ service.progress }}%</li>
+            {% endfor %}
+        </ul>
+        <a href="{{ url_for('painel') }}">Voltar</a>
+    </main>
+</body>
+</html>

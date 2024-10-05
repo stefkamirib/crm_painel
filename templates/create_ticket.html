@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='create_ticket.css') }}">
+    <title>Criar Ticket</title>
+</head>
+<body>
+    <div class="sidebar">
+        <nav class="sidebar__navigation">
+                <ul>
+                    <li class="homepage">
+                        <a href="{{ url_for('painel') }}">
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li class="add_client">
+                        <span><img src="{{ url_for('static', filename='icons/icon_hands.png') }}" alt="Descrição da Imagem" width="22px"></span>
+                        <a href="{{ url_for('add_client') }}">
+                            Adicionar Cliente
+                        </a>
+                    </li>
+
+                    <li class="add_service">
+                        <span><img src="{{ url_for('static', filename='icons/icon_people.png') }}" alt="Descrição da Imagem" width="22px"></span>
+                        <a href="{{ url_for('add_service') }}">
+                            Adicionar Serviço
+                        </a>
+                    </li>
+
+                    <li class="create_ticket">
+                        <span><img src="{{ url_for('static', filename='icons/icon_business.png') }}" alt="Descrição da Imagem" width="23px"></span>
+                        <a href="{{ url_for('create_ticket') }}">
+                            Criar Ticket
+                        </a>
+                    </li>
+                    <li class="view_tickets">
+                        <span><img src="{{ url_for('static', filename='icons/icon_business.png') }}" alt="Descrição da Imagem" width="23px"></span>
+                        <a href="{{ url_for('view_tickets') }}">
+                            Gestão de Tickets
+                        </a>
+                    </li>
+                </ul>
+        </nav>
+    </div>
+    <section>
+        <h1>Criar Ticket</h1>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            
+            <label for="client_id">ID Cliente:</label>
+            <input type="number" name="client_id" id="client_id" class="form-control" required>
+            <br>
+            
+            <label for="client_name">Nome do Cliente:</label>
+            <input type="text" name="client_name" id="client_name" class="form-control" required>
+            <br>
+            
+            <label for="client_email">Email do Cliente:</label>
+            <input type="email" name="client_email" id="client_email" class="form-control" required>
+            <br>
+            
+            <label for="service_id">Serviço:</label>
+            <select id="service_id" class="form-control" name="service_id" onchange="updatePhases(this.value)">
+                <option value="">Selecione um serviço</option>
+                {% for service in services %}
+                    <option  value="{{ service.id_item }}">{{ service.service_type }}</option>
+                {% endfor %}
+            </select>
+
+            <div id="phases">
+                <!-- Fases serão preenchidas aqui com base no serviço selecionado -->
+            </div>
+            
+            <label for="start_date">Data de Início:</label>
+            {{ form.start_date(class="form-control") }}
+            <br>
+            
+            <label for="negotiation_value">Valor da Negociação:</label>
+            {{ form.negotiation_value(class="form-control") }}
+            <br>
+            
+            <button type="submit" class="btn_btn_primary">Criar Ticket</button>
+        </form>
+    </section>    
+    <script>
+        // Atualizar fases e status das fases baseado no serviço selecionado
+        function updatePhases(serviceId) {
+            const phases = {
+                1: ['Recepção de documento', 'Abertura do inventário', 'Declaração no SEFAZ', 'Pagamento do ITCMD', 'Revisão da minuta', 'Emissão das certidões', 'Assinatura da escritura'],
+                2: ['Recepção de documento', 'Abertura do inventário', 'Levantamento bens e dívidas', 'Pagamento do ITCMD', 'Partilha Judicial', 'Expedição de formal de partilha'],
+                3: ['Recepção da documentação', 'Análise Patrimonial e Familiar', 'Definição de Objetos', 'Estruturação do Plano Sucessório e Patrimonial', 'Implementação do Plano', 'Conclusão (Revisão Periódica)']
+            };
+    
+            const statusOptions = `
+                <select name="phase_status" class="phase-status">
+                    <option value="A iniciar" selected>A iniciar</option>
+                    <option value="Em andamento">Em andamento</option>
+                    <option value="Concluído">Concluído</option>
+                </select>
+            `;
+    
+            let phaseList = '<ul>';
+            if (serviceId in phases) {
+                phases[serviceId].forEach((phase, index) => {
+                    phaseList += `<li>${phase} - Status: ${statusOptions.replace('phase-status', 'phase-status-' + index)}</li>`;
+                });
+            }
+            phaseList += '</ul>';
+            document.getElementById('phases').innerHTML = phaseList;
+        }
+    </script>
+</body>
+</html>
