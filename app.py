@@ -1,5 +1,4 @@
 from flask import Flask, render_template, redirect, url_for, flash, request
-from google.cloud import bigquery
 from flask_sqlalchemy import SQLAlchemy
 import email_validator
 from forms import ClientForm, ServiceForm, TicketForm
